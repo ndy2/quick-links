@@ -78,51 +78,13 @@ class QuickLinksProjectConfigurable(private val project: Project) : Configurable
             }
             .disableUpDownActions()
 
-        // Create placeholders table
-        placeholdersTableModel = object : DefaultTableModel(arrayOf("Placeholder", "Value"), 0) {
-            override fun isCellEditable(row: Int, column: Int): Boolean = column == 1
-        }
-
-        // Populate placeholders from all links (global + project)
-        val allPlaceholders = service.getAllPlaceholders()
-        for (placeholder in allPlaceholders.sorted()) {
-            placeholdersTableModel!!.addRow(arrayOf(placeholder, placeholderData[placeholder] ?: ""))
-        }
-
-        val placeholdersTable = JBTable(placeholdersTableModel)
-        placeholdersTable.setShowGrid(true)
-        placeholdersTable.columnModel.getColumn(0).preferredWidth = 150
-        placeholdersTable.columnModel.getColumn(1).preferredWidth = 400
-
-        placeholdersTableModel!!.addTableModelListener { e ->
-            if (e.firstRow >= 0 && e.column == 1) {
-                val placeholder = placeholdersTableModel!!.getValueAt(e.firstRow, 0) as String
-                val value = placeholdersTableModel!!.getValueAt(e.firstRow, 1) as String
-                placeholderData[placeholder] = value
-            }
-        }
-
-        val placeholdersDecorator = ToolbarDecorator.createDecorator(placeholdersTable)
-            .setAddAction {
-                placeholdersTableModel!!.addRow(arrayOf("", ""))
-                placeholdersTable.editCellAt(placeholdersTableModel!!.rowCount - 1, 0)
-            }
-            .setRemoveAction {
-                val selectedRow = placeholdersTable.selectedRow
-                if (selectedRow >= 0) {
-                    val placeholder = placeholdersTableModel!!.getValueAt(selectedRow, 0) as String
-                    placeholderData.remove(placeholder)
-                    placeholdersTableModel!!.removeRow(selectedRow)
-                }
-            }
-            .disableUpDownActions()
-
-        // Make the placeholder name editable for custom placeholders
+        // Create placeholders table - fully editable for both name and value
         placeholdersTableModel = object : DefaultTableModel(arrayOf("Placeholder", "Value"), 0) {
             override fun isCellEditable(row: Int, column: Int): Boolean = true
         }
 
-        // Repopulate
+        // Populate placeholders from all links (global + project)
+        val allPlaceholders = service.getAllPlaceholders()
         for (placeholder in allPlaceholders.sorted()) {
             placeholdersTableModel!!.addRow(arrayOf(placeholder, placeholderData[placeholder] ?: ""))
         }
@@ -133,10 +95,10 @@ class QuickLinksProjectConfigurable(private val project: Project) : Configurable
             }
         }
 
-        val placeholdersTable2 = JBTable(placeholdersTableModel)
-        placeholdersTable2.setShowGrid(true)
-        placeholdersTable2.columnModel.getColumn(0).preferredWidth = 150
-        placeholdersTable2.columnModel.getColumn(1).preferredWidth = 400
+        val placeholdersTable = JBTable(placeholdersTableModel)
+        placeholdersTable.setShowGrid(true)
+        placeholdersTable.columnModel.getColumn(0).preferredWidth = 150
+        placeholdersTable.columnModel.getColumn(1).preferredWidth = 400
 
         placeholdersTableModel!!.addTableModelListener { e ->
             if (e.firstRow >= 0 && e.firstRow < placeholdersTableModel!!.rowCount) {
@@ -149,13 +111,13 @@ class QuickLinksProjectConfigurable(private val project: Project) : Configurable
             }
         }
 
-        val placeholdersDecorator2 = ToolbarDecorator.createDecorator(placeholdersTable2)
+        val placeholdersDecorator = ToolbarDecorator.createDecorator(placeholdersTable)
             .setAddAction {
                 placeholdersTableModel!!.addRow(arrayOf("", ""))
-                placeholdersTable2.editCellAt(placeholdersTableModel!!.rowCount - 1, 0)
+                placeholdersTable.editCellAt(placeholdersTableModel!!.rowCount - 1, 0)
             }
             .setRemoveAction {
-                val selectedRow = placeholdersTable2.selectedRow
+                val selectedRow = placeholdersTable.selectedRow
                 if (selectedRow >= 0) {
                     val placeholder = placeholdersTableModel!!.getValueAt(selectedRow, 0) as String
                     placeholderData.remove(placeholder)
@@ -183,7 +145,7 @@ class QuickLinksProjectConfigurable(private val project: Project) : Configurable
                     label("Set placeholder values for this project. These apply to both global and project links.")
                 }
                 row {
-                    cell(JBScrollPane(placeholdersDecorator2.createPanel()))
+                    cell(JBScrollPane(placeholdersDecorator.createPanel()))
                         .align(Align.FILL)
                         .resizableColumn()
                 }.resizableRow()

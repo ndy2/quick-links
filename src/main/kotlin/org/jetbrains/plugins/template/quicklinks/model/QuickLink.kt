@@ -32,9 +32,4 @@ data class QuickLink(
         }
         return resolvedUrl
     }
-
-    /**
-     * Creates a copy of this QuickLink.
-     */
-    fun copy(): QuickLink = QuickLink(name, url)
 }

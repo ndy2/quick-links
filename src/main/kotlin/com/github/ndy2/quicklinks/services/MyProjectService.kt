@@ -1,9 +1,9 @@
-package org.jetbrains.plugins.template.services
+package com.github.ndy2.quicklinks.services
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
-import org.jetbrains.plugins.template.MyBundle
+import com.github.ndy2.quicklinks.MyBundle
 
 @Service(Service.Level.PROJECT)
 class MyProjectService(project: Project) {

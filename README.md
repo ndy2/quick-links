@@ -1,19 +1,40 @@
-# IntelliJ Platform Plugin Template
+# Quick Links Plugin for IntelliJ Platform
 
-[![official JetBrains project](https://jb.gg/badges/official.svg)][jb:github]
-[![Twitter Follow](https://img.shields.io/badge/follow-%40JBPlatform-1DA1F2?logo=twitter)](https://x.com/JBPlatform)
-[![Build](https://github.com/JetBrains/intellij-platform-plugin-template/workflows/Build/badge.svg)][gh:build]
+A JetBrains IDE plugin that lets each project register multiple links and automatically creates "Open \<name\>" commands. Links may contain placeholders, and each project can set placeholder values.
 
-![IntelliJ Platform Plugin Template][file:intellij-platform-plugin-template-dark]
-![IntelliJ Platform Plugin Template][file:intellij-platform-plugin-template-light]
+## Features
 
-> [!NOTE]
-> Click the <kbd>Use this template</kbd> button and clone it in IntelliJ IDEA.
+- **Global Links**: Configure links that are available across all projects
+- **Project-Specific Links**: Configure links specific to each project
+- **Placeholder Support**: URLs can contain placeholders like `{USER}`, `{REPO}`
+- **Project Placeholder Values**: Each project can define its own placeholder values
+- **Dynamic Actions**: Automatically generates "Open \<name\>" commands in the Tools menu
+
+## Example
+
+Configure a link:
+- Name: `GitHub Repository`
+- URL: `https://github.com/{USER}/{REPO}`
+
+Then set placeholder values per project:
+- `USER` = `myusername`
+- `REPO` = `myproject`
+
+The plugin will create an "Open GitHub Repository" command that opens `https://github.com/myusername/myproject`.
+
+## Settings
+
+- **Settings > Tools > Quick Links (Global)**: Configure global links shared across all projects
+- **Settings > Tools > Quick Links**: Configure project-specific links and placeholder values
 
 <!-- Plugin description -->
-**IntelliJ Platform Plugin Template** is a repository that provides a pure template to make it easier to create a new plugin project (check the [Creating a repository from a template][gh:template] article).
+**Quick Links** is a JetBrains IDE plugin that lets you register custom links with placeholders and quickly open them from the Tools menu.
 
-The main goal of this template is to speed up the setup phase of plugin development for both new and experienced developers by preconfiguring the project scaffold and CI, linking to the proper documentation pages, and keeping everything organized.
+- Configure global links shared across all projects
+- Configure project-specific links
+- Use placeholders like `{USER}`, `{REPO}` in URLs
+- Set placeholder values per project
+- Access links via Tools > Quick Links menu
 
 [gh:template]: https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 <!-- Plugin description end -->

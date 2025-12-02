@@ -1,26 +1,40 @@
-# quick-links
+# Quick Links Plugin for IntelliJ Platform
 
-![Build](https://github.com/ndy2/quick-links/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+A JetBrains IDE plugin that lets each project register multiple links and automatically creates "Open \<name\>" commands. Links may contain placeholders, and each project can set placeholder values.
 
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties) and [pluginName](./gradle.properties), as well as the [id](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `MARKETPLACE_ID` in the above README badges. You can obtain it once the plugin is published to JetBrains Marketplace.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
-- [ ] Configure the [CODECOV_TOKEN](https://docs.codecov.com/docs/quick-start) secret for automated test coverage reports on PRs
+## Features
+
+- **Global Links**: Configure links that are available across all projects
+- **Project-Specific Links**: Configure links specific to each project
+- **Placeholder Support**: URLs can contain placeholders like `{USER}`, `{REPO}`
+- **Project Placeholder Values**: Each project can define its own placeholder values
+- **Dynamic Actions**: Automatically generates "Open \<name\>" commands in the Tools menu
+
+## Example
+
+Configure a link:
+- Name: `GitHub Repository`
+- URL: `https://github.com/{USER}/{REPO}`
+
+Then set placeholder values per project:
+- `USER` = `myusername`
+- `REPO` = `myproject`
+
+The plugin will create an "Open GitHub Repository" command that opens `https://github.com/myusername/myproject`.
+
+## Settings
+
+- **Settings > Tools > Quick Links (Global)**: Configure global links shared across all projects
+- **Settings > Tools > Quick Links**: Configure project-specific links and placeholder values
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+**Quick Links** is a JetBrains IDE plugin that lets you register custom links with placeholders and quickly open them from the Tools menu.
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+- Configure global links shared across all projects
+- Configure project-specific links
+- Use placeholders like `{USER}`, `{REPO}` in URLs
+- Set placeholder values per project
+- Access links via Tools > Quick Links menu
 
 To keep everything working, do not remove `<!-- ... -->` sections. 
 <!-- Plugin description end -->

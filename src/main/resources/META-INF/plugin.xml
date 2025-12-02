@@ -1,15 +1,42 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.ndy2.quicklinks</id>
-    <name>quick-links</name>
-    <vendor>ndy2</vendor>
+    <id>org.jetbrains.plugins.template</id>
+    <name>Quick Links</name>
+    <vendor>JetBrains</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.ndy2.quicklinks.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.ndy2.quicklinks.startup.MyProjectActivity" />
+        <toolWindow factoryClass="org.jetbrains.plugins.template.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <postStartupActivity implementation="org.jetbrains.plugins.template.startup.MyProjectActivity" />
+        
+        <!-- Quick Links Services -->
+        <applicationService serviceImplementation="org.jetbrains.plugins.template.quicklinks.services.QuickLinksApplicationService"/>
+        <projectService serviceImplementation="org.jetbrains.plugins.template.quicklinks.services.QuickLinksProjectService"/>
+        
+        <!-- Quick Links Settings -->
+        <applicationConfigurable
+            parentId="tools"
+            instance="org.jetbrains.plugins.template.quicklinks.settings.QuickLinksApplicationConfigurable"
+            id="org.jetbrains.plugins.template.quicklinks.settings.QuickLinksApplicationConfigurable"
+            displayName="Quick Links (Global)"/>
+        <projectConfigurable
+            parentId="tools"
+            instance="org.jetbrains.plugins.template.quicklinks.settings.QuickLinksProjectConfigurable"
+            id="org.jetbrains.plugins.template.quicklinks.settings.QuickLinksProjectConfigurable"
+            displayName="Quick Links"/>
     </extensions>
+
+    <actions>
+        <!-- Quick Links Action Group -->
+        <group id="QuickLinks.ActionGroup"
+               class="org.jetbrains.plugins.template.quicklinks.actions.QuickLinksActionGroup"
+               text="Quick Links"
+               description="Open quick links"
+               popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </group>
+    </actions>
 </idea-plugin>
